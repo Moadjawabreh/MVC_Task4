@@ -40,7 +40,7 @@ namespace Task4.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("Task4.Models.Feedback", b =>
+            modelBuilder.Entity("Task4.Models.FeedBack", b =>
                 {
                     b.Property<int>("FeedbackId")
                         .ValueGeneratedOnAdd()
@@ -58,35 +58,7 @@ namespace Task4.Migrations
 
                     b.HasKey("FeedbackId");
 
-                    b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("Task4.Models.Manager", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Managers");
+                    b.ToTable("FeedBacks");
                 });
 
             modelBuilder.Entity("Task4.Models.Tasks", b =>
@@ -106,9 +78,6 @@ namespace Task4.Migrations
                     b.Property<int>("LevelOfImportance")
                         .HasColumnType("int");
 
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -124,8 +93,6 @@ namespace Task4.Migrations
                     b.HasKey("TaskId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("ManagerId");
 
                     b.ToTable("Tasks");
                 });
@@ -152,9 +119,6 @@ namespace Task4.Migrations
                     b.Property<DateTime>("EntryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("MaritalStatus")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -173,9 +137,9 @@ namespace Task4.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<byte[]>("PersonalPhoto")
+                    b.Property<string>("PersonalPhoto")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -187,11 +151,13 @@ namespace Task4.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("ManagerId");
 
                     b.ToTable("Users");
                 });
@@ -204,15 +170,7 @@ namespace Task4.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Task4.Models.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Employee");
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Task4.Models.User", b =>
@@ -223,15 +181,7 @@ namespace Task4.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Task4.Models.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Department");
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Task4.Models.Department", b =>

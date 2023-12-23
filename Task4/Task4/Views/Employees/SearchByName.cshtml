@@ -1,0 +1,16 @@
+﻿@model List<User>
+
+<h1>Search Results</h1>
+
+@if (Model.Any())
+{
+    foreach (var user in Model)
+    {
+        <p>@user.UserName</p>
+        <!-- Display other user properties as needed -->
+    }
+}
+else
+{
+    <p>No results found.</p>
+}
